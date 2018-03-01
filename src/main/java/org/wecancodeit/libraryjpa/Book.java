@@ -1,15 +1,12 @@
 package org.wecancodeit.libraryjpa;
 
-import static java.util.Arrays.asList;
-
 import java.util.Collection;
-import java.util.HashSet;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -18,15 +15,15 @@ public class Book {
 	private long id;
 	private String title;
 
-	@OneToMany(mappedBy = "book")
-	private Collection<Genre> genres;
+	@ManyToOne
+	private Genre genre;
 
 	@ManyToMany(mappedBy = "books")
 	private Collection<Author> authors;
 
-	public Collection<Genre> getGenres() {
-		return genres;
-	}
+	// public Collection<Genre> getGenres() {
+	// return genres;
+	// }
 
 	public Collection<Author> getAuthors() {
 		return authors;
@@ -44,9 +41,10 @@ public class Book {
 	private Book() {
 	}
 
-	public Book(String title, Genre... genres) {
+	public Book(String title, Genre genre) {
 		this.title = title;
-		this.genres = new HashSet<>(asList(genres));
+		this.genre = genre;
+
 	}
 
 	@Override

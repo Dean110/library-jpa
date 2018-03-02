@@ -1,5 +1,5 @@
 package org.wecancodeit.libraryjpa;
 
-public class Authors {
+public class LibraryControllerTest {
 
 }

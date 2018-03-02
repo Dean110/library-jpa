@@ -7,46 +7,51 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import static java.util.Arrays.asList;
 
-
 @Entity
-public class Book {
+public class Author {
+
 	@Id
 	@GeneratedValue
 	private long id;
-	private String title;
 
-	@ManyToOne
-	private Genre genre;
+	private String firstName;
 
-	@ManyToMany(mappedBy = "books")
-	private Collection<Author> authors;
+	private String lastName;
+	@ManyToMany
+	private Collection<Book> books;
 
-
-	public Collection<Author> getAuthors() {
-		return authors;
-	}
 
 	public long getId() {
 		return id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getFirstName() {
+		return firstName;
+	}
+	public String getLastName() {
+		return lastName;
 	}
 
+	public Collection<Book> getBooks() {
+		return books;
+	}
+	
+	
+	public Author(String name, Book...books) {
+		this.firstName=name;
+		this.books = new HashSet<>(asList(books));
+	}
 	@SuppressWarnings("unused")
-	private Book() {
+	private Author() {
 	}
 
-	public Book(String title, Genre genre, Author...authors) {
-		this.title = title;
-		this.genre = genre;
-		this.authors = new HashSet<>(asList(authors));
-
+	public Author(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -61,7 +66,7 @@ public class Book {
 		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
-		return id == ((Book) obj).id;
+		return id == ((Author) obj).id;
 	}
 
 }
